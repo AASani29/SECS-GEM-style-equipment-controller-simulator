@@ -1,0 +1,26 @@
+# Build output (always build out-of-source into a build/ directory)
+/build/
+/out/
+/bin/
+/cmake-build-*/
+
+# Qt Creator
+*.user
+*.autosave
+
+# Visual Studio
+.vs/
+*.vcxproj*
+*.sln
+
+# Object/binary files
+*.o
+*.obj
+*.exe
+*.dll
+*.ilk
+*.pdb
+
+# OS cruft
+Thumbs.db
+.DS_Store
