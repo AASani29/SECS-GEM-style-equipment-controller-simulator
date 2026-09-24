@@ -24,3 +24,18 @@ Command CommandQueue::waitAndPop() {
     queue_.pop();
     return command;
 }
+
+std::optional<Command> CommandQueue::waitAndPopUntil(std::chrono::steady_clock::time_point deadline) {
+    std::unique_lock<std::mutex> lock(mutex_);
+    // wait_until() with a predicate returns the predicate's final value:
+    // true if the queue became non-empty, false if we hit the deadline
+    // while it was still empty.
+    const bool hasCommand = notEmpty_.wait_until(lock, deadline, [this] { return !queue_.empty(); });
+    if (!hasCommand) {
+        return std::nullopt;
+    }
+
+    Command command = queue_.front();
+    queue_.pop();
+    return command;
+}
